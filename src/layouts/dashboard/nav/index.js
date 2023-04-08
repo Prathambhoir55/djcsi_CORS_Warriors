@@ -1,3 +1,4 @@
+/* eslint-disable */
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -13,7 +14,8 @@ import Logo from '../../../components/logo';
 import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
-import navConfig from './config';
+import { useState } from 'react';
+import config from './config';
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +51,9 @@ export default function Nav({ openNav, onCloseNav }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('cm_user')))
 
+  console.log(user)
   const renderContent = (
     <Scrollbar
       sx={{
@@ -64,22 +68,22 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={account.photoURL} alt="photoURL" />
+            <Avatar src={user.imageurl} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {user.name}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+                {user.email.length > 18 ? user.email.slice(0, 18) + '...' : user.email}
               </Typography>
             </Box>
           </StyledAccount>
         </Link>
       </Box>
 
-      <NavSection data={navConfig} />
+      <NavSection data={JSON.parse(localStorage.getItem('cm_user'))?.isemployee ? config.empConfig : config.navConfig} />
 
       <Box sx={{ flexGrow: 1 }} />
 
@@ -101,6 +105,7 @@ export default function Nav({ openNav, onCloseNav }) {
         width: { lg: NAV_WIDTH },
       }}
     >
+
       {isDesktop ? (
         <Drawer
           open

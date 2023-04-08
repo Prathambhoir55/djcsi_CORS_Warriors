@@ -29,7 +29,7 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
   const navigate = useNavigate();
-
+  const [user, setUser] = useState(null)
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -37,6 +37,10 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('cm_user')) && setUser(JSON.parse(localStorage.getItem('cm_user')));
+  }, []);
 
   return (
     <>
@@ -57,7 +61,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={user.imageurl} alt="photoURL" />
       </IconButton>
 
       <Popover
@@ -81,10 +85,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {user.name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {user.email}
           </Typography>
         </Box>
 

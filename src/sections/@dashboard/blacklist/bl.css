@@ -1,0 +1,9 @@
+.dzu-dropzone{
+    overflow: hidden !important;
+    height: 50px !important;
+    border:2px dashed #E1A3255c
+}
+
+.dzu-inputLabel{
+    color:#E1A325
+}

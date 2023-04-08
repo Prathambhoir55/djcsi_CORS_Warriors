@@ -14,6 +14,7 @@ import SignUpPage from './pages/SignUpPage';
 import Upload from './pages/Upload';
 import InterviewProcessHR from './pages/InterviewProcessHR';
 import Review from './pages/Review';
+import BlackListPage from './pages/BlackListPage';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +42,10 @@ export default function Router() {
       element: <SignUpPage />,
     },
     {
-      path: '/dashboard/review/*',
+      path: '/blacklist', element: <BlackListPage />
+    },
+    {
+      path: '/review/*',
       element: <Review />
     },
     {

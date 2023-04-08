@@ -11,13 +11,13 @@ function Review() {
     return (
         <>
             <Grid container>
-                <Grid item md={3} />
-                <Grid item md={6}>
+                <Grid item md={3} xs={1} />
+                <Grid item md={6} xs={10}>
                     <CardMedia component='img' image={banner} sx={image} />
                     <TextField autoFocus sx={textfield} multiline rows={13} label='Review' />
                     <LoadingButton sx={button} fullWidth size="large" type="submit" variant="contained">Submit</LoadingButton>
                 </Grid>
-                <Grid item md={3} />
+                <Grid item md={3} xs={1} />
             </Grid>
 
         </>

@@ -16,6 +16,7 @@ import {
 } from "firebase/storage";
 import { storage } from "../../../firebase/config"
 import { upload } from '../../../services/UploadImg';
+import AuthService from 'src/services/AuthService';
 
 // ----------------------------------------------------------------------
 const textfield = { width: '100%' };
@@ -31,15 +32,22 @@ export default function SignUpEmpForm() {
     const [json, setJson] = useState({
         name: '',
         email: '',
-        phoneno: '',
         password: '',
-        imageurl: '',
+        confirm_password: '',
+        phone_no: '',
         isemployee: true,
     });
-    const handleSignup = () => {
-        localStorage.setItem('cm_user', JSON.stringify(json));
-        navigate('/dashboard/profile', { replace: true });
+    const [photo, setPhoto] = useState('')
+
+    const handleSignup = async () => {
+        await AuthService.empregister({ user: json, photo: photo })
+            .then((res) => {
+                console.log(res)
+                localStorage.setItem('cm_user', JSON.stringify(json));
+                navigate('/dashboard/profile', { replace: true });
+            }).catch((e) => console.log(e))
     };
+
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -52,7 +60,7 @@ export default function SignUpEmpForm() {
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url2) => {
                 console.log(url2)
-                setJson({ ...json, 'imageurl': url2 });
+                setPhoto(url2);
             });
         });
     };
@@ -61,22 +69,23 @@ export default function SignUpEmpForm() {
         <>
             <Grid container spacing={3}>
                 <Grid item md={6}>
-                    <TextField sx={textfield} name="name" label="Name" onChange={handleChange} />
+                    <TextField sx={textfield} name="name" value={json.name} label="Name" onChange={handleChange} />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField sx={textfield} name='imageurl' type='file' onChange={(e) => uploadFile(e.target.files[0])} />
+                    <TextField sx={textfield} name='photo' type='file' onChange={(e) => uploadFile(e.target.files[0])} />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField sx={textfield} name="email" label="Email address" onChange={handleChange} />
+                    <TextField sx={textfield} name="email" value={json.email} label="Email address" onChange={handleChange} />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField sx={textfield} name="phoneno" label="Phone Number" onChange={handleChange} />
+                    <TextField sx={textfield} name="phone_no" value={json.phone_no} label="Phone Number" onChange={handleChange} />
                 </Grid>
                 <Grid item md={6}>
                     <TextField
                         sx={textfield}
                         onChange={handleChange}
                         name="password"
+                        value={json.password}
                         label="Password"
                         type={showPassword ? 'text' : 'password'}
                         InputProps={{
@@ -93,8 +102,9 @@ export default function SignUpEmpForm() {
                 <Grid item md={6}>
                     <TextField
                         sx={textfield}
-                        name="password"
+                        name="confirm_password"
                         onChange={handleChange}
+                        value={json.confirm_password}
                         label="Confirm Password"
                         type={showPassword ? 'text' : 'password'}
                         InputProps={{
