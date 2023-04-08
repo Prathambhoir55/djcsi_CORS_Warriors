@@ -7,14 +7,8 @@ import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';
 import { v4 as uuidv4 } from 'uuid';
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-    listAll,
-    list,
-} from "firebase/storage";
-import { storage } from "../../../firebase/config"
+import { ref, uploadBytes, getDownloadURL, listAll, list } from 'firebase/storage';
+import { storage } from '../../../firebase/config';
 import { upload } from '../../../services/UploadImg';
 import AuthService from 'src/services/AuthService';
 
@@ -119,13 +113,6 @@ export default function SignUpEmpForm() {
                     />
                 </Grid>
             </Grid>
-
-            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-                <Checkbox name="remember" label="Remember me" />
-                <Link variant="subtitle2" underline="hover">
-                    Forgot password?
-                </Link>
-            </Stack>
 
             <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleSignup}>
                 SignUp

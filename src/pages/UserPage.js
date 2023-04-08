@@ -22,6 +22,7 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 // components
 import Label from '../components/label';
 import Iconify from '../components/iconify';
@@ -35,10 +36,10 @@ import USERLIST from '../_mock/user';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
+  { id: 'branch', label: 'Branch', alignRight: false },
   { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'salary', label: 'Salary', alignRight: false },
+  { id: 'rate', label: 'Rating', alignRight: false },
   { id: '' },
 ];
 
@@ -152,14 +153,11 @@ export default function UserPage() {
         <title> User | CheckMate UI </title>
       </Helmet>
 
-      <Container>
+      <Container style={{ height: '50vh' }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Employee List
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
         </Stack>
 
         <Card>
@@ -179,17 +177,13 @@ export default function UserPage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, role, salary, branch, avatarUrl, rate } = row;
                     const selectedUser = selected.indexOf(name) !== -1;
 
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                        </TableCell>
-
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
+                        <TableCell component="th" scope="row" padding="default">
+                          <Stack direction="row" alignItems="center" spacing={1}>
                             <Avatar alt={name} src={avatarUrl} />
                             <Typography variant="subtitle2" noWrap>
                               {name}
@@ -197,20 +191,15 @@ export default function UserPage() {
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{company}</TableCell>
+                        <TableCell align="left">{branch}</TableCell>
 
                         <TableCell align="left">{role}</TableCell>
+                        <TableCell align="left">${salary}</TableCell>
 
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{rate}</TableCell>
 
                         <TableCell align="left">
-                          <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
-                        </TableCell>
-
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
-                          </IconButton>
+                          <PersonAddIcon sx={{ '&:hover': { color: 'red' } }} />
                         </TableCell>
                       </TableRow>
                     );

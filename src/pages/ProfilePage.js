@@ -86,8 +86,10 @@ function Profile() {
     console.log(status, meta);
   };
 
-  const handleSubmit = (files, allFiles) => {
-    console.log(files[0].file);
+  const handleSubmit = (files, allFiles, type) => {
+    console.log(files[0].meta);
+    toggleShow();
+    type === 'aadhar' ? setAadhar(true) : setPan(true);
   };
 
   const toggleShow = () => setBasicModal(!basicModal);
@@ -95,15 +97,17 @@ function Profile() {
     <MDBContainer className="">
       <MDBRow>
         <MDBCol>
-          <MDBBreadcrumb className="bg-white rounded-3 p-3 mb-4">
-            <MDBBreadcrumbItem>
-              <a href="/dashboard/app">Home</a>
-            </MDBBreadcrumbItem>
-            <MDBBreadcrumbItem>
-              <a href="/employee">Employee</a>
-            </MDBBreadcrumbItem>
-            <MDBBreadcrumbItem active>User Profile</MDBBreadcrumbItem>
-          </MDBBreadcrumb>
+          {!JSON.parse(localStorage.getItem('cm_user'))?.isemployee && (
+            <MDBBreadcrumb className="bg-white rounded-3 p-3 mb-4">
+              <MDBBreadcrumbItem>
+                <a href="/dashboard/app">Home</a>
+              </MDBBreadcrumbItem>
+              <MDBBreadcrumbItem>
+                <a href="/employee">Employee</a>
+              </MDBBreadcrumbItem>
+              <MDBBreadcrumbItem active>User Profile</MDBBreadcrumbItem>
+            </MDBBreadcrumb>
+          )}
         </MDBCol>
       </MDBRow>
 
@@ -117,9 +121,9 @@ function Profile() {
             </MDBCardBody>
           </MDBCard>
           <MDBCard className="mb-4">
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item xs={12} md={12} lg={12}>
               <AppTrafficBySite
-                title="Indentity"
+                title="Identity"
                 list={[
                   {
                     name: 'Aadhar',
@@ -219,35 +223,35 @@ function Profile() {
                     <span className="text-primary font-bold me-1">Performance</span>
                   </MDBCardText>
                   <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>
-                    Web Design
+                    Punctuality
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={80} valuemin={0} valuemax={100} />
                   </MDBProgress>
 
                   <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                    Website Markup
+                    Customer Feedback
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={72} valuemin={0} valuemax={100} />
                   </MDBProgress>
 
                   <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                    One Page
+                    Hospitality & Service
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={89} valuemin={0} valuemax={100} />
                   </MDBProgress>
 
                   <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                    Mobile Template
+                    Attentivenes
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={55} valuemin={0} valuemax={100} />
                   </MDBProgress>
 
                   <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                    Backend API
+                    Knowledge
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={66} valuemin={0} valuemax={100} />
@@ -278,7 +282,9 @@ function Profile() {
                         <Dropzone
                           getUploadParams={getUploadParams}
                           onChangeStatus={handleChangeStatus}
-                          onSubmit={handleSubmit}
+                          onSubmit={(files, allfiles) => {
+                            handleSubmit(files, allfiles, 'aadhar');
+                          }}
                           maxFiles={1}
                           multiple={false}
                           canCancel={false}
@@ -295,7 +301,9 @@ function Profile() {
                       <Dropzone
                         getUploadParams={getUploadParams}
                         onChangeStatus={handleChangeStatus}
-                        onSubmit={handleSubmit}
+                        onSubmit={(files, allfiles) => {
+                          handleSubmit(files, allfiles, 'pan');
+                        }}
                         maxFiles={1}
                         multiple={false}
                         canCancel={false}
@@ -317,31 +325,31 @@ function Profile() {
               <MDBCard className="mb-4 mb-md-0">
                 <MDBCardBody className="mb-3">
                   <MDBCardText className="mb-4">
-                    <span className="text-primary font-italic me-1">assigment</span> Project Status
+                    <span className="text-primary font-italic me-1">Past Work Experience</span>
                   </MDBCardText>
                   <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>
-                    Web Design
+                    Mc'Donalds
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={80} valuemin={0} valuemax={100} />
                   </MDBProgress>
 
                   <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                    Website Markup
+                    Prithvi Cafe
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={72} valuemin={0} valuemax={100} />
                   </MDBProgress>
 
                   <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                    One Page
+                    Tea Villa Cafe
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={89} valuemin={0} valuemax={100} />
                   </MDBProgress>
 
                   <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                    Mobile Template
+                    Olive Cafe
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={55} valuemin={0} valuemax={100} />

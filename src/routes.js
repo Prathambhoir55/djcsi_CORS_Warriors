@@ -46,7 +46,7 @@ export default function Router() {
     },
     {
       path: '/review/*',
-      element: <Review />
+      element: <Review />,
     },
     {
       element: <SimpleLayout />,

@@ -39,10 +39,6 @@ Nav.propTypes = {
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const handleLogOut = () => {
-    localStorage.setItem('cm_user', null);
-    navigate('/signup', { replace: true });
-  };
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
@@ -88,11 +84,7 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Button onClick={handleLogOut} target="_blank" variant="outlined">
-            Logout
-          </Button>
-        </Stack>
+        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }} />
       </Box>
     </Scrollbar>
   );
