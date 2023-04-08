@@ -16,7 +16,9 @@ class HRRegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data['is_active'] = True
-        return User.objects.create_user(**validated_data)
+        user = User.objects.create_user(**validated_data)
+        hr, created = HR.objects.get_or_create(user = user)
+        return user
     
 class EmployeeRegisterSerializer(serializers.ModelSerializer):
     user = UserRegisterSerializer()

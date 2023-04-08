@@ -55,7 +55,7 @@ class HRGetAPI(GenericAPIView):
 
     def get(self, request):
         try:
-            user = HR.objects.get(id = request.user.id)
+            user = HR.objects.get(user = request.user)
             # hr = user.hr_set()
             serializer = self.serializer_class(user)
         except:
