@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'accounts',
     'company',
     'blackflag',
+    'verification',
 ]
 
 MIDDLEWARE = [
