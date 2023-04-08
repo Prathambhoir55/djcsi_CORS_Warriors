@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useState } from 'react';
+import { CardMedia } from '@mui/material';
 import {
   MDBCol,
   MDBContainer,
@@ -24,6 +25,8 @@ import {
   MDBListGroup,
   MDBListGroupItem,
 } from 'mdb-react-ui-kit';
+import Dropzone from 'react-dropzone-uploader';
+import 'react-dropzone-uploader/dist/styles.css';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -47,6 +50,7 @@ import ProfilePhoto from 'src/sections/@dashboard/profile/ProfilePhoto';
 import { Icon } from '@iconify/react';
 const ProfilePage = () => {
   const percentage = 66;
+
   return (
     <div>
       <Profile />
@@ -58,9 +62,12 @@ export default ProfilePage;
 
 function Profile() {
   const [basicModal, setBasicModal] = useState(false);
-  const [aadhar, setAadhar] = useState(true);
+  const [aadhar, setAadhar] = useState(false);
   const [pan, setPan] = useState(false);
   const [clicked, setClicked] = useState(undefined);
+  const aadhar_uri =
+    'https://legaldbol.com/wp-content/uploads/2019/03/27-Creative-Aadhar-Card-Template-Download-Download-for-Aadhar-Card-Template-Download.jpg';
+  const pan_uri = 'https://www.thestatesman.com/wp-content/uploads/2019/07/pan-card.jpg';
   const toggleUpload = (value) => {
     if (value === 'aadhar') {
       setClicked('aadhar');
@@ -70,6 +77,17 @@ function Profile() {
       setClicked('pan');
       toggleShow();
     }
+  };
+  const getUploadParams = () => {
+    return { url: 'https://httpbin.org/post' };
+  };
+
+  const handleChangeStatus = ({ meta }, status) => {
+    console.log(status, meta);
+  };
+
+  const handleSubmit = (files, allFiles) => {
+    console.log(files[0].file);
   };
 
   const toggleShow = () => setBasicModal(!basicModal);
@@ -95,8 +113,7 @@ function Profile() {
             <MDBCardBody className="text-center">
               <ProfilePhoto />
               <p className="text-muted mb-1">Full Stack Developer</p>
-              <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
-              <div className="d-flex justify-content-center mb-2"></div>
+              <p className="text-muted mb-1">Bay Area, San Francisco, CA</p>
             </MDBCardBody>
           </MDBCard>
           <MDBCard className="mb-4">
@@ -197,7 +214,7 @@ function Profile() {
           <MDBRow>
             <MDBCol md="6">
               <MDBCard className="mb-4 mb-md-0">
-                <MDBCardBody>
+                <MDBCardBody className="mb-3">
                   <MDBCardText className="mb-4">
                     <span className="text-primary font-bold me-1">Performance</span>
                   </MDBCardText>
@@ -245,20 +262,6 @@ function Profile() {
                 <MDBModalContent>
                   <MDBModalHeader>
                     <MDBModalTitle>
-                      {clicked === 'aadhar' ? (
-                        !aadhar ? (
-                          <TextField id="standard-basic" label="Enter Aadhar Numbe" />
-                        ) : (
-                          'View Aadhar Card'
-                        )
-                      ) : !pan ? (
-                        'Upload Pan Card'
-                      ) : (
-                        'View Pan Card'
-                      )}
-                      Docutment
-                    </MDBModalTitle>
-                    <MDBBtn className="btn-close" color="none" onClick={toggleShow}>
                       {clicked === 'aadhar'
                         ? !aadhar
                           ? 'Upload Aadhar Card'
@@ -266,16 +269,53 @@ function Profile() {
                         : !pan
                         ? 'Upload Pan Card'
                         : 'View Pan Card'}
-                    </MDBBtn>
+                    </MDBModalTitle>
+                    <MDBBtn className="btn-close" color="none" onClick={toggleShow}></MDBBtn>
                   </MDBModalHeader>
-                  <MDBModalBody></MDBModalBody>
+                  <MDBModalBody>
+                    {clicked === 'aadhar' ? (
+                      !aadhar ? (
+                        <Dropzone
+                          getUploadParams={getUploadParams}
+                          onChangeStatus={handleChangeStatus}
+                          onSubmit={handleSubmit}
+                          maxFiles={1}
+                          multiple={false}
+                          canCancel={false}
+                          inputContent="Drop Document"
+                          styles={{
+                            dropzone: { width: '100%', height: 200 },
+                            dropzoneActive: { borderColor: 'grey' },
+                          }}
+                        />
+                      ) : (
+                        <CardMedia component="img" image={aadhar_uri} />
+                      )
+                    ) : !pan ? (
+                      <Dropzone
+                        getUploadParams={getUploadParams}
+                        onChangeStatus={handleChangeStatus}
+                        onSubmit={handleSubmit}
+                        maxFiles={1}
+                        multiple={false}
+                        canCancel={false}
+                        inputContent="Drop Document"
+                        styles={{
+                          dropzone: { width: '100%', height: 200 },
+                          dropzoneActive: { borderColor: 'grey' },
+                        }}
+                      />
+                    ) : (
+                      <CardMedia component="img" image={pan_uri} />
+                    )}
+                  </MDBModalBody>
                 </MDBModalContent>
               </MDBModalDialog>
             </MDBModal>
 
             <MDBCol md="6">
               <MDBCard className="mb-4 mb-md-0">
-                <MDBCardBody>
+                <MDBCardBody className="mb-3">
                   <MDBCardText className="mb-4">
                     <span className="text-primary font-italic me-1">assigment</span> Project Status
                   </MDBCardText>
