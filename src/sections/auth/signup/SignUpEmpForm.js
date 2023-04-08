@@ -52,6 +52,7 @@ export default function SignUpEmpForm() {
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url2) => {
                 console.log(url2)
+                setJson({ ...json, 'imageurl': url2 });
             });
         });
     };

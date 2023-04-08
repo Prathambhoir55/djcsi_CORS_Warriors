@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -17,12 +18,17 @@ import {
   AppCurrentSubject,
   AppConversionRates,
 } from '../sections/@dashboard/app';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
   const theme = useTheme();
-
+  const navigate = useNavigate()
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('cm_user')) ? navigate('/dashboard/app') : navigate('/signup');
+  }, []);
   return (
     <>
       <Helmet>
