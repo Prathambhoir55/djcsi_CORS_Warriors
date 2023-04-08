@@ -47,7 +47,7 @@ class EmployeeDropDownAPI(ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Employee.objects.filter(user__project = self.request.user.project)
+        queryset = Employee.objects.filter(user__company = self.request.user.company).exclude(user=self.request.user)
         return queryset
 
 
@@ -147,13 +147,14 @@ class RegisterComplaint(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]   
 
     def post(self,request,*args,**kwargs):
-        user = Complaint.objects.get(id = request.user.id)
+        user = request.user
+        employee = Employee.objects.get(user=user)
         data = request.data
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             # validated_data = serializer.create(serializer.validated_data, user)
-            serializer.save()
-        return Response({"response":"Successfully added", "data":serializer.data}, status=status.HTTP_201_CREATED)
+            validated_data = serializer.create(serializer.validated_data, employee)
+        return Response({"response":"Successfully added", "data":validated_data}, status=status.HTTP_201_CREATED)
 
 
 class HRComplaint(ListAPIView):
