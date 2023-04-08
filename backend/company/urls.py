@@ -7,6 +7,7 @@ urlpatterns = [
     path('get-hr/', views.HRGetAPI.as_view(), name = 'get-employee'),
     path('get-empuser/', views.EmpGetAPI.as_view(), name = 'get-employee'),
     path('get-all-emp/', views.EmployeeListAPI.as_view(), name = 'get-all-emp'),
+    path('emp-dropdown/', views.EmployeeDropDownAPI.as_view(), name = 'emp-dropdown'),
     path('all-emp/', views.AllEmployeeListAPI.as_view(), name = 'get-all-emp'),
     path('hr-get-emp/<int:pk>', views.HRGetEmployee.as_view(), name = 'hr-get-emp'),
 

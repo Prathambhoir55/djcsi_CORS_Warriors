@@ -29,7 +29,7 @@ class EmployeeRegisterAPI(GenericAPIView):
         serializer.is_valid(raise_exception = True)
         user = serializer.save()
         token = Token.objects.create(user=user)
-        return Response({"message":"Success", "token":token.key, "user":user}, status=status.HTTP_201_CREATED)
+        return Response({"message":"Success", "token":token.key, "employee":serializer.validated_data}, status=status.HTTP_201_CREATED)
 
 
 class EmployeeListAPI(ListAPIView):
@@ -37,7 +37,17 @@ class EmployeeListAPI(ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Employee.objects.filter(hr = self.request.user.id)
+        hr = HR.objects.get(user = self.request.user)
+        queryset = Employee.objects.filter(hr = hr)
+        return queryset
+
+
+class EmployeeDropDownAPI(ListAPIView):
+    serializer_class = EmployeeGetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Employee.objects.filter(user__project = self.request.user.project)
         return queryset
 
 

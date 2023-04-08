@@ -42,7 +42,7 @@ class User(AbstractUser):
     name = models.CharField(max_length = 50)
     phone_no = models.CharField(unique=True, max_length = 10)
     company = models.CharField(max_length = 50, blank=True)
-    isemployee = models.BooleanField(blank=True)
+    isemployee = models.BooleanField(blank=True, default=False)
 
     USERNAME_FIELD = 'phone_no'
     REQUIRED_FIELDS=[]

@@ -27,13 +27,12 @@ class EmployeeRegisterSerializer(serializers.ModelSerializer):
         model = Employee
         fields = ['user', 'photo']
 
-    def validate(self, attrs):
-        attrs = attrs.get('user')
-        return attrs
-
     def create(self, validated_data):
-        validated_data['is_active'] = True
-        return User.objects.create_user(**validated_data)
+        user_data = validated_data.pop('user')
+        user_data['is_active'] = True
+        user = User.objects.create_user(**user_data)
+        obj, created = Employee.objects.get_or_create(user = user, **validated_data)
+        return user
     
 
 class HRGetSerializer(serializers.ModelSerializer):
