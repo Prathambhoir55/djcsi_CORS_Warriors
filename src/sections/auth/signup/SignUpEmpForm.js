@@ -15,6 +15,7 @@ import {
     list,
 } from "firebase/storage";
 import { storage } from "../../../firebase/config"
+import { upload } from '../../../services/UploadImg';
 
 // ----------------------------------------------------------------------
 const textfield = { width: '100%' };
@@ -45,11 +46,24 @@ export default function SignUpEmpForm() {
         setJson({ ...json, [name]: value });
     };
 
+    const uploadFile = (imageUpload) => {
+        if (imageUpload == null) return;
+        const imageRef = ref(storage, `images/${imageUpload.name} + ${uuidv4()}`);
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url2) => {
+                console.log(url2)
+            });
+        });
+    };
+
     return (
         <>
             <Grid container spacing={3}>
-                <Grid item md={12}>
+                <Grid item md={6}>
                     <TextField sx={textfield} name="name" label="Name" onChange={handleChange} />
+                </Grid>
+                <Grid item md={6}>
+                    <TextField sx={textfield} name='imageurl' type='file' onChange={(e) => uploadFile(e.target.files[0])} />
                 </Grid>
                 <Grid item md={6}>
                     <TextField sx={textfield} name="email" label="Email address" onChange={handleChange} />
