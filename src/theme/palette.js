@@ -5,7 +5,7 @@ import { alpha } from '@mui/material/styles';
 // SETUP COLORS
 const GREY = {
   0: '#FFFFFF',
-  100: '#F9FAFB',
+  100: '#FBF5F3',
   200: '#F4F6F8',
   300: '#DFE3E8',
   400: '#C4CDD5',
@@ -19,8 +19,8 @@ const GREY = {
 const PRIMARY = {
   lighter: '#D1E9FC',
   light: '#76B0F1',
-  main: '#2065D1',
-  dark: '#103996',
+  main: '#FC8019',
+  dark: '#CC742C',
   darker: '#061B64',
   contrastText: '#fff',
 };
