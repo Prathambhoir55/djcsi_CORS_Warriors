@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox, Grid } from '@mui/material';
@@ -17,47 +17,50 @@ import {
 import { storage } from "../../../firebase/config"
 
 // ----------------------------------------------------------------------
-const textfield = { width: '100%' }
+const textfield = { width: '100%' };
 
 export default function SignUpEmpForm() {
     const navigate = useNavigate();
+    useEffect(() => {
+        JSON.parse(localStorage.getItem('cm_user')) ? navigate('/dashboard/profile') : navigate('/signup');
+    }, []);
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleClick = () => {
-        navigate('/dashboard', { replace: true });
+    const [json, setJson] = useState({
+        name: '',
+        email: '',
+        phoneno: '',
+        password: '',
+        imageurl: '',
+        isemployee: true,
+    });
+    const handleSignup = () => {
+        localStorage.setItem('cm_user', JSON.stringify(json));
+        navigate('/dashboard/profile', { replace: true });
     };
-
-    const uploadFile = (imageUpload) => {
-        if (imageUpload == null) return;
-        const imageRef = ref(storage, `images/${imageUpload.name} + ${uuidv4()}`);
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
-                // setImageUrls(url);
-                console.log(url);
-            });
-        });
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setJson({ ...json, [name]: value });
     };
 
     return (
         <>
             <Grid container spacing={3}>
-                <Grid item md={6}>
-                    <TextField sx={textfield} name="name" label="Name" />
+                <Grid item md={12}>
+                    <TextField sx={textfield} name="name" label="Name" onChange={handleChange} />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField sx={textfield} type="file"
-                        onChange={(event) => uploadFile(event.target.files[0])}
-                        inputProps={{ accept: ".jpg" }} />
+                    <TextField sx={textfield} name="email" label="Email address" onChange={handleChange} />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField sx={textfield} name="email" label="Email address" />
+                    <TextField sx={textfield} name="phoneno" label="Phone Number" onChange={handleChange} />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField sx={textfield} name="phoneno" label="Phone Number" />
-                </Grid>
-                <Grid item md={6}>
-                    <TextField sx={textfield}
+                    <TextField
+                        sx={textfield}
+                        onChange={handleChange}
                         name="password"
                         label="Password"
                         type={showPassword ? 'text' : 'password'}
@@ -73,8 +76,10 @@ export default function SignUpEmpForm() {
                     />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField sx={textfield}
+                    <TextField
+                        sx={textfield}
                         name="password"
+                        onChange={handleChange}
                         label="Confirm Password"
                         type={showPassword ? 'text' : 'password'}
                         InputProps={{
@@ -88,7 +93,6 @@ export default function SignUpEmpForm() {
                         }}
                     />
                 </Grid>
-
             </Grid>
 
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
@@ -98,8 +102,8 @@ export default function SignUpEmpForm() {
                 </Link>
             </Stack>
 
-            <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
-                Login
+            <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleSignup}>
+                SignUp
             </LoadingButton>
         </>
     );
