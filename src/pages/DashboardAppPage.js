@@ -26,7 +26,7 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Dashboard | CheckMate UI </title>
       </Helmet>
 
       <Container maxWidth="xl">
