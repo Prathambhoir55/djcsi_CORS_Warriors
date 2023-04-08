@@ -1,52 +1,50 @@
 // component
 import SvgColor from '../../../components/svg-color';
-
 // ----------------------------------------------------------------------
 
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
-const navConfig = [
-  {
-    title: 'dashboard',
-    path: '/dashboard/app',
-    icon: icon('ic_analytics'),
-  },
-  {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'product',
-    path: '/dashboard/products',
-    icon: icon('ic_cart'),
-  },
-  {
-    title: 'blog',
-    path: '/dashboard/blog',
-    icon: icon('ic_blog'),
-  },
+const isEmployee = JSON.parse(localStorage.getItem('cm_user'))?.isemployee;
 
-  {
-    title: 'Check',
-    path: '/dashboard/check',
-    icon: icon('ic_lock'),
-  },
-  // {
-  //   title: 'signup',
-  //   path: '/signup',
-  //   icon: icon('ic_lock'),
-  // },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
-  },
-  {
-    title: 'Profile',
-    path: '/dashboard/profile',
-    icon: icon('ic_disabled'),
-  },
-];
+const navConfig = isEmployee
+  ? [
+      {
+        title: 'dashboard',
+        path: '/dashboard/app',
+        icon: icon('ic_analytics'),
+      },
+      {
+        title: 'Profile',
+        path: '/dashboard/profile',
+        icon: icon('ic_disabled'),
+      },
+    ]
+  : [
+      {
+        title: 'dashboard',
+        path: '/dashboard/app',
+        icon: icon('ic_analytics'),
+      },
+      {
+        title: 'user',
+        path: '/dashboard/user',
+        icon: icon('ic_user'),
+      },
+      {
+        title: 'product',
+        path: '/dashboard/products',
+        icon: icon('ic_cart'),
+      },
+      {
+        title: 'Check',
+        path: '/dashboard/check',
+        icon: icon('ic_lock'),
+      },
+      {
+        title: 'Profile',
+        path: '/dashboard/profile',
+        icon: icon('ic_disabled'),
+      },
+    ];
 
 export default navConfig;

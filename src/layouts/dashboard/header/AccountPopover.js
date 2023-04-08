@@ -1,9 +1,11 @@
+/* eslint-disable */
 import { useState } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +28,11 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
-
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    localStorage.setItem('cm_user', null);
+    navigate('/signup', { replace: true });
+  };
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -97,7 +103,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={handleLogOut} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </Popover>

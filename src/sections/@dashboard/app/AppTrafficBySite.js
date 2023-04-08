@@ -26,12 +26,12 @@ export default function AppTrafficBySite({ title, subheader, list, ...other }) {
           }}
         >
           {list.map((site) => (
-            <Paper key={site.name} variant="outlined" sx={{ py: 2.5, textAlign: 'center' }}>
+            <Paper key={site.name} variant="outlined" sx={{ py: 2.5, textAlign: 'center', fontWeight: 'bold' }}>
               <Box sx={{ mb: 0.5, display: 'inline-block' }}>{site.icon}</Box>
 
               <Typography variant="h6">{fShortenNumber(site.value)}</Typography>
 
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: '' }}>
                 {site.name}
               </Typography>
             </Paper>

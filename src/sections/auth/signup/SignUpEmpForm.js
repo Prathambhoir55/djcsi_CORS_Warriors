@@ -1,4 +1,5 @@
-import { useState } from 'react';
+/* eslint-disable */
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox, Grid } from '@mui/material';
@@ -7,74 +8,94 @@ import { LoadingButton } from '@mui/lab';
 import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
-const textfield = { width: '100%' }
+const textfield = { width: '100%' };
 
 export default function SignUpEmpForm() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  useEffect(() => {
+    JSON.parse(localStorage.getItem('cm_user')) ? navigate('/dashboard/profile') : navigate('/signup');
+  }, []);
 
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-    const handleClick = () => {
-        navigate('/dashboard', { replace: true });
-    };
+  const [json, setJson] = useState({
+    name: '',
+    email: '',
+    phoneno: '',
+    password: '',
+    imageurl: '',
+    isemployee: true,
+  });
+  const handleSignup = () => {
+    localStorage.setItem('cm_user', JSON.stringify(json));
+    navigate('/dashboard/profile', { replace: true });
+  };
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setJson({ ...json, [name]: value });
+  };
 
-    return (
-        <>
-            <Grid container spacing={3}>
-                <Grid item md={12}>
-                    <TextField sx={textfield} name="name" label="Name" />
-                </Grid>
-                <Grid item md={6}>
-                    <TextField sx={textfield} name="email" label="Email address" />
-                </Grid>
-                <Grid item md={6}>
-                    <TextField sx={textfield} name="phoneno" label="Phone Number" />
-                </Grid>
-                <Grid item md={6}>
-                    <TextField sx={textfield}
-                        name="password"
-                        label="Password"
-                        type={showPassword ? 'text' : 'password'}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Grid>
-                <Grid item md={6}>
-                    <TextField sx={textfield}
-                        name="password"
-                        label="Confirm Password"
-                        type={showPassword ? 'text' : 'password'}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Grid>
+  return (
+    <>
+      <Grid container spacing={3}>
+        <Grid item md={12}>
+          <TextField sx={textfield} name="name" label="Name" onChange={handleChange} />
+        </Grid>
+        <Grid item md={6}>
+          <TextField sx={textfield} name="email" label="Email address" onChange={handleChange} />
+        </Grid>
+        <Grid item md={6}>
+          <TextField sx={textfield} name="phoneno" label="Phone Number" onChange={handleChange} />
+        </Grid>
+        <Grid item md={6}>
+          <TextField
+            sx={textfield}
+            onChange={handleChange}
+            name="password"
+            label="Password"
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+        <Grid item md={6}>
+          <TextField
+            sx={textfield}
+            name="password"
+            onChange={handleChange}
+            label="Confirm Password"
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+      </Grid>
 
-            </Grid>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+        <Checkbox name="remember" label="Remember me" />
+        <Link variant="subtitle2" underline="hover">
+          Forgot password?
+        </Link>
+      </Stack>
 
-            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-                <Checkbox name="remember" label="Remember me" />
-                <Link variant="subtitle2" underline="hover">
-                    Forgot password?
-                </Link>
-            </Stack>
-
-            <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
-                Login
-            </LoadingButton>
-        </>
-    );
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleSignup}>
+        SignUp
+      </LoadingButton>
+    </>
+  );
 }
