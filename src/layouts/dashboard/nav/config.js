@@ -28,8 +28,8 @@ const navConfig = [
   },
 
   {
-    title: 'upload',
-    path: '/dashboard/upload',
+    title: 'Check',
+    path: '/dashboard/check',
     icon: icon('ic_lock'),
   },
   // {
