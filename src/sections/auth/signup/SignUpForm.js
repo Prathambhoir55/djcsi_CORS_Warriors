@@ -25,7 +25,7 @@ export default function SignUpForm() {
     phoneno: '',
     password: '',
     imageurl: '',
-    isemployee: true,
+    isemployee: false,
   });
   const handleSignUp = () => {
     localStorage.setItem('cm_user', JSON.stringify(json));

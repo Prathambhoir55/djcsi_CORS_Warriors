@@ -41,8 +41,8 @@ export default function Router() {
       element: <SignUpPage />,
     },
     {
-      path: '/dashboard/review/*',
-      element: <Review />
+      path: '/review/*',
+      element: <Review />,
     },
     {
       element: <SimpleLayout />,
