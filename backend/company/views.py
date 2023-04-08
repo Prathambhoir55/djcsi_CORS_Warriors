@@ -34,27 +34,61 @@ class EmployeeRegisterAPI(GenericAPIView):
 class EmployeeListAPI(ListAPIView):
     serializer_class = EmployeeGetSerializer
     permission_classes = [permissions.IsAuthenticated]
-    queryset = Employee.objects.all()
+
+    def get_queryset(self):
+        queryset = Employee.objects.filter(hr = self.request.user.id)
+        return queryset
 
 
-class EmployeeGetAPI(GenericAPIView):
+class AllEmployeeListAPI(ListAPIView):
     serializer_class = EmployeeGetSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, pk):
+    def get_queryset(self):
+        queryset = Employee.objects.all()
+        return queryset
+
+
+class HRGetAPI(GenericAPIView):
+    serializer_class = HRGetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
         try:
-            user = User.objects.get(id = request.user.id)
+            user = HR.objects.get(id = request.user.id)
+            # hr = user.hr_set()
             serializer = self.serializer_class(user)
         except:
             return Response("User not found", status= status.HTTP_404_NOT_FOUND)
         return Response(serializer.data)
 
     def put(self,request,*args,**kwargs):
-        user = User.objects.get(id=request.user.id)
+        user = HR.objects.get(id=request.user.id)
         data = request.data
         serializer = self.serializer_class(data=data)
         user = serializer.update(request.data, user)
         return Response(request.data, status = status.HTTP_200_OK)
+
+
+class EmpGetAPI(GenericAPIView):
+    serializer_class = EmployeeGetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = Employee.objects.get(id = request.user.id)
+            serializer = self.serializer_class(user)
+        except:
+            return Response("User not found", status= status.HTTP_404_NOT_FOUND)
+        return Response(serializer.data)
+
+    def put(self,request,*args,**kwargs):
+        user = Employee.objects.get(id=request.user.id)
+        data = request.data
+        serializer = self.serializer_class(data=data)
+        user = serializer.update(request.data, user)
+        return Response(request.data, status = status.HTTP_200_OK)
+
 
 class HRGetEmployee(GenericAPIView):
     serializer_class = EmployeeGetSerializer
@@ -62,8 +96,9 @@ class HRGetEmployee(GenericAPIView):
 
     def get(self, request, pk):
         try:
-            user = User.objects.get(id = request.user.id)
+            user = Employee.objects.get(id = pk)
             serializer = self.serializer_class(user)
         except:
             return Response("User not found", status= status.HTTP_404_NOT_FOUND)
         return Response(serializer.data)
+    

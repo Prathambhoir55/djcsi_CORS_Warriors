@@ -34,10 +34,16 @@ class EmployeeRegisterSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
     
 
+class HRGetSerializer(serializers.ModelSerializer):
+    user = UserRegisterSerializer()
+    class Meta:
+        model = HR
+        fields = '__all__'
+
+
 class EmployeeGetSerializer(serializers.ModelSerializer):
     user = UserRegisterSerializer()
 
     class Meta:
         model = Employee
         fields = ['user','arrival_time', 'leaving_time', 'hr', 'aadhar_card', 'pan_card', 'is_verified', 'photo']
-        
