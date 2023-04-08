@@ -1,8 +1,9 @@
 /* eslint-disable */
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
+import { Link, Container, Typography, Divider, Stack, Button, Box, Tabs, Tab } from '@mui/material';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
@@ -10,6 +11,8 @@ import Logo from '../components/logo';
 import Iconify from '../components/iconify';
 // sections
 import SignUpForm from 'src/sections/auth/signup/SignUpForm';
+import PropTypes from 'prop-types';
+import SignUpEmpForm from 'src/sections/auth/signup/SignUpEmpForm';
 
 // ----------------------------------------------------------------------
 
@@ -39,11 +42,60 @@ const StyledContent = styled('div')(({ theme }) => ({
     padding: theme.spacing(12, 0),
 }));
 
+
+let style = {
+    '& .Mui-selected': {
+        color: '#FC8019 !important'
+    },
+    '& .MuiTabs-indicator': {
+        backgroundColor: '#FC8019'
+    },
+    '& .css-1h9z7r5-MuiButtonBase-root-MuiTab-root ': {
+        textTransform: 'none'
+    }
+}
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ paddingTop: '20px' }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
 // ----------------------------------------------------------------------
 
 export default function SignUpPage() {
     const mdUp = useResponsive('up', 'md');
+    const [value, setValue] = React.useState(0);
 
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
     return (
         <>
             <Helmet>
@@ -78,7 +130,20 @@ export default function SignUpPage() {
                             Don’t have an account? {''}
                             <Link variant="subtitle2">Get started</Link>
                         </Typography>
-                        <SignUpForm />
+                        <Box sx={{ width: '100%' }}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <Tabs value={value} sx={style} onChange={handleChange} aria-label="basic tabs example">
+                                    <Tab label="Company" sx={{}} {...a11yProps(0)} />
+                                    <Tab label="Employee" {...a11yProps(1)} />
+                                </Tabs>
+                            </Box>
+                            <TabPanel value={value} index={0}>
+                                <SignUpForm />
+                            </TabPanel>
+                            <TabPanel value={value} index={1}>
+                                <SignUpEmpForm />
+                            </TabPanel>
+                        </Box>
                     </StyledContent>
                 </Container>
             </StyledRoot>

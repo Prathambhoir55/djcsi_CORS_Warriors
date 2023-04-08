@@ -22,7 +22,7 @@ export default function LoginForm() {
     <>
       <Grid container spacing={3}>
         <Grid item md={12}>
-          <TextField sx={textfield} name="email" label="Emaill" />
+          <TextField sx={textfield} name="phoneno" label="Phone Number" />
         </Grid>
         <Grid item md={12}>
           <TextField sx={textfield}

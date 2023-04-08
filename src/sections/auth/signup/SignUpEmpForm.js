@@ -9,7 +9,7 @@ import Iconify from '../../../components/iconify';
 // ----------------------------------------------------------------------
 const textfield = { width: '100%' }
 
-export default function SignUpForm() {
+export default function SignUpEmpForm() {
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -21,11 +21,8 @@ export default function SignUpForm() {
     return (
         <>
             <Grid container spacing={3}>
-                <Grid item md={6}>
-                    <TextField sx={textfield} name="Name" label="Name" />
-                </Grid>
-                <Grid item md={6}>
-                    <TextField sx={textfield} name="com_name" label="Company Name" />
+                <Grid item md={12}>
+                    <TextField sx={textfield} name="name" label="Name" />
                 </Grid>
                 <Grid item md={6}>
                     <TextField sx={textfield} name="email" label="Email address" />
