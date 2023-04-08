@@ -97,7 +97,7 @@ export default function Nav({ openNav, onCloseNav }) {
             </Typography>
           </Box>
 
-          <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
+          <Button href="https://material-ui.com/store/items/CheckMate-dashboard/" target="_blank" variant="contained">
             Upgrade to Pro
           </Button>
         </Stack>
