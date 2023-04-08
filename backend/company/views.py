@@ -15,8 +15,9 @@ class HRRegisterAPI(GenericAPIView):
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception = True)
         user = serializer.save()
+
         token = Token.objects.create(user=user)
-        return Response({"message":"Success", "token":token.key, "user":user}, status=status.HTTP_201_CREATED)
+        return Response({"message":"Success", "token":token.key, "user": serializer.validated_data}, status=status.HTTP_201_CREATED)
     
 class EmployeeRegisterAPI(GenericAPIView):
     permission_classes = [permissions.AllowAny]
@@ -106,29 +107,30 @@ class HRGetEmployee(GenericAPIView):
 #complaints 
 
 class MyComplaint(GenericAPIView):
-    serializer_class = ComplaintSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get(self, request):
-        try:
-            user = Complaint.objects.get(issued_by = request.user)
-            serializer = self.serializer_class(user)
-        except:
-            return Response("User not found", status= status.HTTP_404_NOT_FOUND)
-        return Response(serializer.data)
-
-
-class EmployeeComplaint(GenericAPIView):
     serializer_class = MyComplaintSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         try:
-            user = Complaint.objects.get(issued_by = request.user)
+            user = Complaint.objects.filter(issued_by = request.user)
             serializer = self.serializer_class(user)
         except:
-            return Response("User not found", status= status.HTTP_404_NOT_FOUND)
+            return Response("No complaints", status= status.HTTP_404_NOT_FOUND)
         return Response(serializer.data)
+
+
+class EmployeeComplaint(GenericAPIView):
+    serializer_class = HRComplaintSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = Complaint.objects.filter(issued_for = request.user)
+            serializer = self.serializer_class(user)
+        except:
+            return Response("No complaints found", status= status.HTTP_404_NOT_FOUND)
+        return Response(serializer.data)
+
 
 class RegisterComplaint(GenericAPIView):
     serializer_class = RegisterComplaintSerializer
@@ -143,15 +145,12 @@ class RegisterComplaint(GenericAPIView):
             serializer.save()
         return Response({"response":"Successfully added", "data":serializer.data}, status=status.HTTP_201_CREATED)
 
-class HRComplaint(GenericAPIView):
+
+class HRComplaint(ListAPIView):
     serializer_class = HRComplaintSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request):
-        try:
-            user = Complaint.objects.all()
-            serializer = self.serializer_class(user)
-        except:
-            return Response("User not found", status= status.HTTP_404_NOT_FOUND)
-        return Response(serializer.data)
+    def get_queryset(self):
+        queryset = Complaint.objects.all()
+        return queryset
 

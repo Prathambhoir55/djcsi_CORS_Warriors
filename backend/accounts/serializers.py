@@ -13,7 +13,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['name', 'email', 'password','confirm_password','phone_no','company']
+        fields = ['name', 'email', 'password','confirm_password','phone_no','company', 'isemployee']
 
     # To validate data received
     def validate(self, attrs):
@@ -46,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
     password= serializers.CharField(max_length = 16, min_length = 8, write_only=True)
     class Meta:
         model = User
-        fields = ['name', 'email','phone_no', 'password']
+        fields = ['name', 'email','phone_no', 'password', 'isemployee']
 
     # To update user
     def update(self,validated_data,instance):

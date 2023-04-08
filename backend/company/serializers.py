@@ -54,7 +54,7 @@ class MyComplaintSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Complaint
-        fields=['issued_by','text','is_resolved','hr']
+        fields=['issued_by','issued_for','text','is_resolved','hr']
 
 
 class HRComplaintSerializer(serializers.ModelSerializer):
@@ -69,3 +69,5 @@ class RegisterComplaintSerializer(serializers.ModelSerializer):
     class Meta:
         model=Complaint
         fields=['issued_by','issued_for','text','is_resolved']
+
+    
