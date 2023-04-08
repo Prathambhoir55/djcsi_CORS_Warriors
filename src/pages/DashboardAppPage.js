@@ -26,9 +26,11 @@ import { useNavigate } from 'react-router';
 export default function DashboardAppPage() {
   const theme = useTheme();
   const navigate = useNavigate()
+
   useEffect(() => {
     JSON.parse(localStorage.getItem('cm_user')) ? navigate('/dashboard/app') : navigate('/signup');
   }, []);
+
   return (
     <>
       <Helmet>
