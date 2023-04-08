@@ -42,6 +42,11 @@ const navConfig = [
     path: '/404',
     icon: icon('ic_disabled'),
   },
+  {
+    title: 'Profile',
+    path: '/dashboard/profile',
+    icon: icon('ic_disabled'),
+  },
 ];
 
 export default navConfig;
