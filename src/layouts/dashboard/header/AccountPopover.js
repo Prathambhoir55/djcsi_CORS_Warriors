@@ -29,10 +29,7 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
   const navigate = useNavigate();
-  const handleLogOut = () => {
-    localStorage.setItem('cm_user', null);
-    navigate('/signup', { replace: true });
-  };
+
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
