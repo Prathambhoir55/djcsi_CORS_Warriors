@@ -20,7 +20,7 @@ class Complaint(models.Model):
     issued_for = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="issued_for")
     is_resolved = models.BooleanField(blank=True, default=False)
     text = models.CharField(max_length=300)
-
+    hr = models.ForeignKey(HR, on_delete=models.CASCADE, related_name="hr_complaint")
 
 class Attendance(models.Model):
     date = models.DateField(models.Model)

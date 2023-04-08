@@ -49,3 +49,23 @@ class EmployeeGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = ['user','arrival_time', 'leaving_time', 'hr', 'aadhar_card', 'pan_card', 'is_verified', 'photo']
+
+class MyComplaintSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Complaint
+        fields=['issued_by','text','is_resolved','hr']
+
+
+class HRComplaintSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Complaint
+        fields=['issued_by','issued_for','text','is_resolved','hr']
+
+
+class RegisterComplaintSerializer(serializers.ModelSerializer):
+    is_resolved = serializers.BooleanField(default=False)
+    class Meta:
+        model=Complaint
+        fields=['issued_by','issued_for','text','is_resolved']
