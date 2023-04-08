@@ -12,6 +12,7 @@ import DashboardAppPage from './pages/DashboardAppPage';
 import ProfilePage from './pages/ProfilePage';
 import SignUpPage from './pages/SignUpPage';
 import Upload from './pages/Upload';
+import InterviewProcessHR from './pages/InterviewProcessHR';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +27,7 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
-        { path: 'upload', element: <Upload /> },
+        { path: 'check', element: <InterviewProcessHR /> },
         { path: 'profile', element: <ProfilePage /> },
       ],
     },
