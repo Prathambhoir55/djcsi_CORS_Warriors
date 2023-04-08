@@ -13,6 +13,7 @@ import ProfilePage from './pages/ProfilePage';
 import SignUpPage from './pages/SignUpPage';
 import Upload from './pages/Upload';
 import InterviewProcessHR from './pages/InterviewProcessHR';
+import Review from './pages/Review';
 
 // ----------------------------------------------------------------------
 
@@ -38,6 +39,10 @@ export default function Router() {
     {
       path: 'signup',
       element: <SignUpPage />,
+    },
+    {
+      path: '/dashboard/review/*',
+      element: <Review />
     },
     {
       element: <SimpleLayout />,
