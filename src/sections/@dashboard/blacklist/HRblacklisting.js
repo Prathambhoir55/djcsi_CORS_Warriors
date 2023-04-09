@@ -7,12 +7,18 @@ import Dropzone from 'react-dropzone-uploader'
 import 'react-dropzone-uploader/dist/styles.css';
 import './bl.css'
 import BasicModal from './Modal'
+import { v4 as uuidv4 } from 'uuid';
+import { ref, uploadBytes, getDownloadURL, listAll, list } from 'firebase/storage';
+import { storage } from '../../../firebase/config';
+import { useState } from 'react'
 
 const textfield = { width: '100%', marginTop: '5%' }
 const image = { marginTop: '5%', marginBottom: '5%', borderRadius: '10px' }
 const button = { marginTop: '5%' }
 
 function HRblacklisting() {
+    const [photo, setPhoto] = useState('')
+    const [reason, setReason] = useState('')
     const getUploadParams = () => {
         return { url: 'https://httpbin.org/post' };
     };
@@ -22,7 +28,15 @@ function HRblacklisting() {
     };
 
     const handleSubmit = (files, allFiles) => {
-        console.log(files[0].file);
+        let imageUpload = files[0].file;
+        if (imageUpload == null) return;
+        const imageRef = ref(storage, `images/${imageUpload.name} + ${uuidv4()}`);
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url2) => {
+                console.log(url2)
+                setPhoto(url2);
+            });
+        });
     };
 
     const [open, setOpen] = React.useState(false);
@@ -49,12 +63,12 @@ function HRblacklisting() {
 
                         }}
                     />
-                    <TextField autoFocus sx={textfield} multiline rows={7} label='Reason' />
+                    <TextField autoFocus sx={textfield} onChange={(e) => setReason(e.target.value)} multiline rows={7} label='Reason' />
                     <LoadingButton sx={button} onClick={handleOpen} fullWidth size="large" type="submit" variant="contained">Submit</LoadingButton>
                 </Grid>
                 <Grid item md={3} xs={1} />
             </Grid>
-            <BasicModal open={open} setOpen={setOpen} handleClose={handleClose} handleOpen={handleOpen} />
+            <BasicModal open={open} setOpen={setOpen} handleClose={handleClose} handleOpen={handleOpen} photo={photo} reason={reason} />
         </>
     )
 }

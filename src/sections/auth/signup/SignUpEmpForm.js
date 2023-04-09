@@ -37,10 +37,10 @@ export default function SignUpEmpForm() {
         await AuthService.empregister({ user: json, photo: photo })
             .then((res) => {
                 console.log(res)
-                localStorage.setItem('cm_user', JSON.stringify(res.user));
-                localStorage.setItem('cm_token', JSON.stringify(res.token));
+                localStorage.setItem('cm_user', JSON.stringify(res.data.employee.user));
+                localStorage.setItem('cm_token', JSON.stringify(res.data.token));
+                navigate('/dashboard/app', replace = true)
 
-                navigate('/dashboard/profile', { replace: true });
             }).catch((e) => console.log(e))
     };
 

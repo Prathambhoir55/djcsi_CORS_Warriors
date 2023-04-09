@@ -30,13 +30,15 @@ export default function SignUpForm() {
         isemployee: false,
     });
     const handleSignUp = async () => {
+
         await AuthService.hrregister({ user: json })
             .then((res) => {
                 console.log(res)
-                localStorage.setItem('cm_user', JSON.stringify(res.user));
-                localStorage.setItem('cm_token', res.token);
-                navigate('/dashboard/app', { replace: true });
+                localStorage.setItem('cm_user', JSON.stringify(res.data.user));
+                localStorage.setItem('cm_token', res.data.token);
+                navigate('/dashboard/app', { replace: true })
             }).catch((e) => console.log(e))
+
     };
     const handleChange = (e) => {
         const name = e.target.name;
