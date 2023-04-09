@@ -25,11 +25,6 @@ const navConfig = [
     path: '/dashboard/check',
     icon: icon('ic_lock'),
   },
-  {
-    title: 'Profile',
-    path: '/dashboard/profile',
-    icon: icon('ic_disabled'),
-  },
 ];
 
 const empConfig = [
