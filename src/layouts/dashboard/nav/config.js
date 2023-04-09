@@ -18,7 +18,7 @@ const navConfig = [
   {
     title: 'Black List',
     path: '/blacklist',
-    icon: icon('ic_cart'),
+    icon: icon('ic_warning'),
   },
   {
     title: 'Check',
@@ -43,9 +43,9 @@ const empConfig = [
     path: '/dashboard/profile',
     icon: icon('ic_disabled'),
   },
-]
-
+];
 
 export default {
-  navConfig, empConfig
+  navConfig,
+  empConfig,
 };

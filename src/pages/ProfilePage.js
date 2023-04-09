@@ -29,6 +29,9 @@ import Dropzone from 'react-dropzone-uploader';
 import 'react-dropzone-uploader/dist/styles.css';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
+import { v4 as uuidv4 } from 'uuid';
+import { ref, uploadBytes, getDownloadURL, listAll, list } from 'firebase/storage';
+import { storage } from '../firebase/config';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography, TextField } from '@mui/material';
@@ -48,6 +51,7 @@ import {
 } from '../sections/@dashboard/app';
 import ProfilePhoto from 'src/sections/@dashboard/profile/ProfilePhoto';
 import { Icon } from '@iconify/react';
+import ComplaintService from 'src/services/ComplaintService';
 const ProfilePage = () => {
   const percentage = 66;
 
@@ -87,7 +91,20 @@ function Profile() {
   };
 
   const handleSubmit = (files, allFiles, type) => {
-    console.log(files[0].meta);
+    const imageUpload = files[0].file;
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `images/${imageUpload.name} + ${uuidv4()}`);
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(async (url2) => {
+        console.log(url2);
+        if (type === 'aadhar') {
+          await ComplaintService.updateUser({ aadhar_card: url2 }).then((res) => console.log(res));
+        } else {
+          await ComplaintService.updateUser({ pan_card: url2 }).then((res) => console.log(res));
+        }
+      });
+    });
+
     toggleShow();
     type === 'aadhar' ? setAadhar(true) : setPan(true);
   };
