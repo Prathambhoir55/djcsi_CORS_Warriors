@@ -10,4 +10,13 @@ const block = (data) => {
         })
 }
 
-export default { block }
+const view = (id) => {
+    return httpCommon.get(`/company/hr-get-emp/${id}`, {
+        headers: {
+            'Authorization': `Token ${localStorage.getItem('cm_token')}`,
+            'Content-Type': 'application/json'
+        }
+    })
+}
+
+export default { block, view }

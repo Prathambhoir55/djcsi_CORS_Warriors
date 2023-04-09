@@ -34,6 +34,7 @@ import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
 import BasicModal from 'src/sections/@dashboard/user/Modal';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
@@ -151,6 +152,7 @@ export default function UserPage() {
     setPage(0);
     setFilterName(event.target.value);
   };
+  const navigate = useNavigate()
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
@@ -194,7 +196,7 @@ export default function UserPage() {
                   {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
                     return (
                       <TableRow hover key={index} tabIndex={-1} role="checkbox">
-                        <TableCell component="th" scope="row" padding="default">
+                        <TableCell onClick={() => navigate(`/dashboard/details/${row.user.phone_no}`)} component="th" scope="row" padding="default">
                           <Stack direction="row" alignItems="center" spacing={1}>
                             <Avatar alt={row.user.name} src={row.photo} />
                             <Typography variant="subtitle2" noWrap>

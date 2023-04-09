@@ -15,6 +15,7 @@ import Upload from './pages/Upload';
 import InterviewProcessHR from './pages/InterviewProcessHR';
 import Review from './pages/Review';
 import BlackListPage from './pages/BlackListPage';
+import DetsPage from './pages/DetsPage';
 
 // ----------------------------------------------------------------------
 
@@ -26,11 +27,13 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
+        { path: 'employee', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'check', element: <InterviewProcessHR /> },
         { path: 'profile', element: <ProfilePage /> },
+        { path: 'details/*', element: <DetsPage /> },
+
       ],
     },
     {
