@@ -74,7 +74,7 @@ class HRGetAPI(GenericAPIView):
         return Response(serializer.data)
 
     def put(self,request,*args,**kwargs):
-        user = HR.objects.get(id=request.user.id)
+        user = HR.objects.get(user=request.user)
         data = request.data
         serializer = self.serializer_class(data=data)
         user = serializer.update(request.data, user)
@@ -94,7 +94,8 @@ class EmpGetAPI(GenericAPIView):
         return Response(serializer.data)
 
     def put(self,request,*args,**kwargs):
-        user = Employee.objects.get(id=request.user.id)
+        hr = HR.objects.get(user=request.user)
+        employee = Employee.objects.get()
         data = request.data
         serializer = self.serializer_class(data=data)
         user = serializer.update(request.data, user)

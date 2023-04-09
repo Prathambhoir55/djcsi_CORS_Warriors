@@ -44,10 +44,26 @@ class HRGetSerializer(serializers.ModelSerializer):
 
 class EmployeeGetSerializer(serializers.ModelSerializer):
     user = UserRegisterSerializer()
+    phone_no = serializers.CharField(write_only=True)
 
     class Meta:
         model = Employee
-        fields = ['user','arrival_time', 'leaving_time', 'hr', 'aadhar_card', 'pan_card', 'is_verified', 'photo']
+        fields = ['user','arrival_time', 'leaving_time', 'hr', 'aadhar_card', 'pan_card', 'is_verified', 'photo', 'phone_no']
+    
+    def update(self,validated_data,instance):
+        instance.name = validated_data['name'] 
+        instance.phone_no = validated_data['phone_no']
+        if instance.password != validated_data['password']:
+            instance.set_password(validated_data['password'])
+        instance.save()
+        return instance
+    
+
+class EmployeePutSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Employee
+    
 
 class MyComplaintSerializer(serializers.ModelSerializer):
 
