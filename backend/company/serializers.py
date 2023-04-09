@@ -92,6 +92,7 @@ class RegisterComplaintSerializer(serializers.ModelSerializer):
     is_resolved = serializers.BooleanField(default=False)
     issued_by = serializers.IntegerField(read_only=True)
     hr = serializers.IntegerField(read_only=True)
+    issued_for = serializers.CharField(write_only = True)
 
     class Meta:
         model=Complaint
