@@ -342,7 +342,7 @@ function Profile() {
               <MDBCard className="mb-4 mb-md-0">
                 <MDBCardBody className="mb-3">
                   <MDBCardText className="mb-4">
-                    <span className="text-primary font-italic me-1">Past Work Experience</span>
+                    <span className="text-primary font-italic me-1">Past Ratings</span>
                   </MDBCardText>
                   <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>
                     Mc'Donalds
@@ -373,7 +373,7 @@ function Profile() {
                   </MDBProgress>
 
                   <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>
-                    Backend API
+                    Jamjar Cafe
                   </MDBCardText>
                   <MDBProgress className="rounded">
                     <MDBProgressBar striped animated width={66} valuemin={0} valuemax={100} />

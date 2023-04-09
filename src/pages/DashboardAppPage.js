@@ -65,114 +65,80 @@ export default function DashboardAppPage() {
           <Grid item xs={12} md={6} lg={12}>
             {JSON.parse(localStorage.getItem('cm_user'))?.isemployee && <ProfilePage />}
           </Grid>
-          <Grid item xs={12} md={6} lg={12}>
-            <AppWebsiteVisits
-              title="Avg. Monthly Ratings"
-              subheader="(+43%) than last year"
-              chartLabels={[
-                '05/01/2022',
-                '06/01/2022',
-                '07/01/2022',
-                '08/01/2022',
-                '09/01/2022',
-                '10/01/2022',
-                '11/01/2022',
-                '12/01/2022',
-                '01/01/2023',
-                '02/01/2023',
-                '03/01/2023',
-              ]}
-              chartData={[
-                {
-                  name: 'Branch A',
-                  type: 'column',
-                  fill: 'solid',
-                  data: [23, 11, 22, 27, 13, 22, 37, 22, 44, 22, 30],
-                },
-                {
-                  name: 'Branch B',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                },
-                {
-                  name: 'Branch C',
-                  type: 'line',
-                  fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-                },
-              ]}
-            />
-          </Grid>
+          {!JSON.parse(localStorage.getItem('cm_user'))?.isemployee && (
+            <Grid item xs={12} md={6} lg={12}>
+              <AppWebsiteVisits
+                title="Avg. Monthly Ratings"
+                subheader="(+43%) than last year"
+                chartLabels={[
+                  '05/01/2022',
+                  '06/01/2022',
+                  '07/01/2022',
+                  '08/01/2022',
+                  '09/01/2022',
+                  '10/01/2022',
+                  '11/01/2022',
+                  '12/01/2022',
+                  '01/01/2023',
+                  '02/01/2023',
+                  '03/01/2023',
+                ]}
+                chartData={[
+                  {
+                    name: 'Branch A',
+                    type: 'column',
+                    fill: 'solid',
+                    data: [23, 11, 22, 27, 13, 22, 37, 22, 44, 22, 30],
+                  },
+                  {
+                    name: 'Branch B',
+                    type: 'area',
+                    fill: 'gradient',
+                    data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+                  },
+                  {
+                    name: 'Branch C',
+                    type: 'line',
+                    fill: 'solid',
+                    data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                  },
+                ]}
+              />
+            </Grid>
+          )}
 
           <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
               title="Conflicts"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: faker.name.jobTitle(),
-                description: faker.name.jobTitle(),
-                postedAt: faker.date.recent(),
-              }))}
+              list={[
+                {
+                  title: "Conflict between 'Urmi' and 'Kush'",
+                  description: 'Conflict Description',
+                  postedAt: faker.date.recent(),
+                },
+                {
+                  title: "Conflict between 'Urmi' and 'Pratham'",
+                  description: 'Conflict Description',
+                  postedAt: faker.date.recent(),
+                },
+                {
+                  title: "Conflict between 'Urmi' and 'Khushias'",
+                  description: 'Conflict Description',
+                  postedAt: faker.date.recent(),
+                },
+              ]}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
-              title="Order Timeline"
+              title="Work Experiences "
               list={[...Array(5)].map((_, index) => ({
                 id: faker.datatype.uuid(),
-                title: [
-                  '1983, orders, $4220',
-                  '12 Invoices have been paid',
-                  'Order #37745 from September',
-                  'New order placed #XF-2356',
-                  'New order placed #XF-2346',
-                ][index],
+                title: ['McDonalds', 'Prithvi Cafe', 'Tea Villa Cafe', 'Olive Cafe', 'Jamjar Cafe'][index],
                 type: `order${index + 1}`,
                 time: faker.date.past(),
               }))}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTrafficBySite
-              title="Traffic by Site"
-              list={[
-                {
-                  name: 'FaceBook',
-                  value: 323234,
-                  icon: <Iconify icon={'eva:facebook-fill'} color="#1877F2" width={32} />,
-                },
-                {
-                  name: 'Google',
-                  value: 341212,
-                  icon: <Iconify icon={'eva:google-fill'} color="#DF3E30" width={32} />,
-                },
-                {
-                  name: 'Linkedin',
-                  value: 411213,
-                  icon: <Iconify icon={'eva:linkedin-fill'} color="#006097" width={32} />,
-                },
-                {
-                  name: 'Twitter',
-                  value: 443232,
-                  icon: <Iconify icon={'eva:twitter-fill'} color="#1C9CEA" width={32} />,
-                },
-              ]}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks
-              title="Tasks"
-              list={[
-                { id: '1', label: 'Create FireStone Logo' },
-                { id: '2', label: 'Add SCSS and JS files if required' },
-                { id: '3', label: 'Stakeholder Meeting' },
-                { id: '4', label: 'Scoping & Estimations' },
-                { id: '5', label: 'Sprint Showcase' },
-              ]}
             />
           </Grid>
         </Grid>
