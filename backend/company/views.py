@@ -93,13 +93,18 @@ class EmpGetAPI(GenericAPIView):
             return Response("User not found", status= status.HTTP_404_NOT_FOUND)
         return Response(serializer.data)
 
+class EmpPutAPI(GenericAPIView):
+    serializer_class = EmployeePutSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
     def put(self,request,*args,**kwargs):
         hr = HR.objects.get(user=request.user)
-        employee = Employee.objects.get()
         data = request.data
         serializer = self.serializer_class(data=data)
-        user = serializer.update(request.data, user)
-        return Response(request.data, status = status.HTTP_200_OK)
+        if serializer.is_valid():
+            validated_data = serializer.update(serializer.validated_data, hr)
+            return Response({"message":"Success", "data":request.data}, status = status.HTTP_200_OK)
+        return Response({"message":"data not valid"}, status= status.HTTP_400_BAD_REQUEST)
 
 
 class HRGetEmployee(GenericAPIView):
