@@ -10,4 +10,13 @@ const getEmployees = () => {
   });
 };
 
-export default { getEmployees };
+const getAllEmployees = () => {
+  return httpCommon.get('/company/emp-dropdown/', {
+    headers: {
+      Authorization: `Token  ${JSON.parse(localStorage.getItem('cm_token'))}`,
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+export default { getEmployees, getAllEmployees };
