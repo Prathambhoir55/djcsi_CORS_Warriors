@@ -10,7 +10,7 @@ urlpatterns = [
     path('emp-dropdown/', views.EmployeeDropDownAPI.as_view(), name = 'emp-dropdown'),
     path('all-emp/', views.AllEmployeeListAPI.as_view(), name = 'get-all-emp'),
     path('hr-get-emp/<int:pk>', views.HRGetEmployee.as_view(), name = 'hr-get-emp'),
-
+    path('emp-update/', views.EmpPutAPI.as_view(), name = 'emp-update'),
     path('my-comp/', views.MyComplaint.as_view(), name = 'my-comp'),
     path('emp-comp/', views.EmployeeComplaint.as_view(), name = 'emp-comp'),
     path('hr-comp/', views.HRComplaint.as_view(), name = 'hr-comp'),
