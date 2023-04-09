@@ -34,7 +34,7 @@ export default function DashboardAppPage() {
   };
   useEffect(() => {
     JSON.parse(localStorage.getItem('cm_user')) ? navigate('/dashboard/app') : navigate('/signup');
-  }, [JSON.parse(localStorage.getItem('cm_user'))]);
+  }, []);
 
   return (
     <>

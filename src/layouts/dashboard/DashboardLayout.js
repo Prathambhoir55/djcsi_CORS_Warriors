@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 // @mui
 import Fab from '@mui/material/Fab';
@@ -21,6 +21,7 @@ import {
   MDBModalFooter,
 } from 'mdb-react-ui-kit';
 import { TextField } from '@mui/material';
+import ComplaintService from 'src/services/ComplaintService';
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
 
@@ -45,6 +46,15 @@ const Main = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function DashboardLayout() {
+  useEffect(() => {
+    const funct = async () => {
+      await ComplaintService.getEmployees().then((res) => {
+        console.log(res);
+      });
+    };
+    funct();
+  }, []);
+
   const [topRightModal, setTopRightModal] = useState(false);
   const handleSubmitTicket = () => {
     console.log('Ticket Submitted');
