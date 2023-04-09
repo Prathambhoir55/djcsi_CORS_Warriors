@@ -16,4 +16,4 @@ class SociabilityAPI(GenericAPIView):
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception = True)
         user = serializer.save()
-        return Response({"message":"Success", "token":token.key, "employee":serializer.validated_data}, status=status.HTTP_201_CREATED)
+        return Response({"message":"Success", "rating": serializer.validated_data}, status=status.HTTP_201_CREATED)

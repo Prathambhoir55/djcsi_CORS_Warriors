@@ -48,7 +48,7 @@ class EmployeeGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ['user','arrival_time', 'leaving_time', 'hr', 'aadhar_card', 'pan_card', 'is_verified', 'photo']
+        fields = ['id','user','arrival_time', 'leaving_time', 'hr', 'aadhar_card', 'pan_card', 'is_verified', 'photo']
     
     def update(self,validated_data,instance):
         instance.name = validated_data['name'] 
