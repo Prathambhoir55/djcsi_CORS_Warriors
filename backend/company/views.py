@@ -107,11 +107,11 @@ class HRGetEmployee(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, pk):
-        try:
-            user = Employee.objects.get(id = pk)
-            serializer = self.serializer_class(user)
-        except:
-            return Response("User not found", status= status.HTTP_404_NOT_FOUND)
+        # try:
+        user = Employee.objects.get(user__phone_no = pk)
+        serializer = self.serializer_class(user)
+    # except:
+        # return Response("User not found", status= status.HTTP_404_NOT_FOUND)
         return Response(serializer.data)
     
 
