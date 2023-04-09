@@ -56,11 +56,29 @@ export default function DashboardLayout() {
   }, []);
 
   const [topRightModal, setTopRightModal] = useState(false);
-  const handleSubmitTicket = () => {
-    console.log('Ticket Submitted');
-  };
   const toggleShow = () => setTopRightModal(!topRightModal);
+  const handleSubmitTicket = async () => {
+    toggleShow();
+    await ComplaintService.postComplaint(json)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   const [open, setOpen] = useState(false);
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setJson({ ...json, [name]: value });
+  };
+  const [json, setJson] = useState({
+    issued_for: '',
+    text: '',
+    is_resolved: false,
+  });
 
   return (
     <StyledRoot>
@@ -70,14 +88,16 @@ export default function DashboardLayout() {
       <Main>
         <Outlet />
       </Main>
-      <Fab
-        color="primary"
-        aria-label="add"
-        onClick={toggleShow}
-        style={{ position: 'fixed', margin: 0, top: 'auto', right: 20, bottom: 20, left: 'auto' }}
-      >
-        <HelpOutlineIcon fontSize="large" />
-      </Fab>
+      {JSON.parse(localStorage.getItem('cm_user'))?.isemployee && (
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={toggleShow}
+          style={{ position: 'fixed', margin: 0, top: 'auto', right: 20, bottom: 20, left: 'auto' }}
+        >
+          <HelpOutlineIcon fontSize="large" />
+        </Fab>
+      )}
 
       <MDBModal animationDirection="right" show={topRightModal} tabIndex="-1" setShow={setTopRightModal}>
         <MDBModalDialog position="top-right" side>
@@ -87,12 +107,15 @@ export default function DashboardLayout() {
               <MDBBtn color="none" className="btn-close btn-close-white" onClick={toggleShow}></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
+              <TextField label="Phone Number" value={json.issued_for} name="issued_for" onChange={handleChange} />
               <hr />
               <TextField
                 sx={{ width: '100%', height: 'auto' }}
                 multiline
                 rows={10}
-                name="Description"
+                onChange={handleChange}
+                name="text"
+                value={json.text}
                 label="Descibe your complaint"
               />
             </MDBModalBody>

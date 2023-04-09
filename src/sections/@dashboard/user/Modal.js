@@ -119,7 +119,7 @@ export default function BasicModal({ open, setOpen, handleOpen, handleClose, pho
             </Grid>
           </Typography>
           <LoadingButton sx={button} fullWidth size="large" type="submit" variant="contained" onSubmit={handleSubmit}>
-            Submit
+            Hire {name}
           </LoadingButton>
         </Box>
       </Modal>
