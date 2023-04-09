@@ -31,7 +31,7 @@ export default function SignUpEmpForm() {
         phone_no: '',
         isemployee: true,
     });
-    const [photo, setPhoto] = useState('')
+    const [photo, setPhoto] = useState('');
 
     const handleSignup = async () => {
         await AuthService.empregister({ user: json, photo: photo })

@@ -1,7 +1,8 @@
+/* eslint-disable */
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // @mui
 import {
   Card,
@@ -10,12 +11,12 @@ import {
   Paper,
   Avatar,
   Button,
-  Popover,
   Checkbox,
   TableRow,
   MenuItem,
   TableBody,
   TableCell,
+  Popover,
   Container,
   Typography,
   IconButton,
@@ -27,20 +28,20 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
+import ComplaintService from 'src/services/ComplaintService';
 // sections
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
+import BasicModal from 'src/sections/@dashboard/user/Modal';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'branch', label: 'Branch', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'salary', label: 'Salary', alignRight: false },
-  { id: 'rate', label: 'Rating', alignRight: false },
-  { id: '' },
+  { id: 'email', label: 'E-Mail', alignRight: false },
+  { id: 'phoneno', label: 'Phone Number', alignRight: false },
+  { id: 'add', label: 'Add', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -75,6 +76,16 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function UserPage() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const funct = async () => {
+      await ComplaintService.getEmployees().then((res) => {
+        setData(res.data);
+      });
+    };
+    funct();
+  }, []);
+
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -146,7 +157,11 @@ export default function UserPage() {
   const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && !!filterName;
-
+  const [open2, setOpen2] = React.useState(false);
+  const [phoneNo, setPhoneNo] = useState('');
+  const [name, setName] = useState('');
+  const handleOpen = () => setOpen2(true);
+  const handleClose = () => setOpen2(false);
   return (
     <>
       <Helmet>
@@ -176,30 +191,31 @@ export default function UserPage() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, salary, branch, avatarUrl, rate } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
-
+                  {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
                     return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                      <TableRow hover key={index} tabIndex={-1} role="checkbox">
                         <TableCell component="th" scope="row" padding="default">
                           <Stack direction="row" alignItems="center" spacing={1}>
-                            <Avatar alt={name} src={avatarUrl} />
+                            <Avatar alt={row.user.name} src={row.photo} />
                             <Typography variant="subtitle2" noWrap>
-                              {name}
+                              {row.user.name}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{branch}</TableCell>
+                        <TableCell align="left">{row.user.email}</TableCell>
 
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">${salary}</TableCell>
-
-                        <TableCell align="left">{rate}</TableCell>
+                        <TableCell align="left">{row.user.phone_no}</TableCell>
 
                         <TableCell align="left">
-                          <PersonAddIcon sx={{ '&:hover': { color: 'red' } }} />
+                          <PersonAddIcon
+                            onClick={() => {
+                              setPhoneNo(row.user.phone_no);
+                              setName(row.user.name);
+                              setOpen2(true);
+                            }}
+                            sx={{ '&:hover': { color: 'red' } }}
+                          />
                         </TableCell>
                       </TableRow>
                     );
@@ -278,6 +294,14 @@ export default function UserPage() {
           Delete
         </MenuItem>
       </Popover>
+      <BasicModal
+        open={open2}
+        name={name}
+        setOpen={setOpen2}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
+        phone_no={phoneNo}
+      />
     </>
   );
 }

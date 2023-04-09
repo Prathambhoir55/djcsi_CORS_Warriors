@@ -46,8 +46,6 @@ export default function SignUpForm() {
         setJson({ ...json, [name]: value });
     };
 
-
-
     return (
         <>
             <Grid container spacing={3}>
@@ -61,7 +59,13 @@ export default function SignUpForm() {
                     <TextField sx={textfield} name="email" value={json.email} label="Email address" onChange={handleChange} />
                 </Grid>
                 <Grid item md={6}>
-                    <TextField sx={textfield} name="phone_no" value={json.phone_no} label="Phone Number" onChange={handleChange} />
+                    <TextField
+                        sx={textfield}
+                        name="phone_no"
+                        value={json.phone_no}
+                        label="Phone Number"
+                        onChange={handleChange}
+                    />
                 </Grid>
                 <Grid item md={6}>
                     <TextField

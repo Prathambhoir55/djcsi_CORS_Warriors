@@ -5,11 +5,8 @@ import { sample } from 'lodash';
 
 const users = [...Array(24)].map((_, index) => ({
   id: faker.datatype.uuid(),
-  avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
   name: faker.name.fullName(),
-  branch: faker.company.name(),
-  salary: faker.finance.amount(1000, 10000, 2),
-  rate: faker.datatype.float(1),
+  email: faker.company.name(),
   role: sample([
     'Leader',
     'Hr Manager',
