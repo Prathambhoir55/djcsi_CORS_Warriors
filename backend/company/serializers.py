@@ -60,12 +60,12 @@ class EmployeeGetSerializer(serializers.ModelSerializer):
     
 
 class EmployeePutSerializer(serializers.ModelSerializer):
-    phone_no = serializers.CharField(write_only=True)
-    hr = serializers.IntegerField(read_only=True)
-
+    # phone_no = serializers.CharField(write_only=True)
+    # hr = serializers.IntegerField(read_only=True)
+    user = UserRegisterSerializer()
     class Meta:
         model = Employee
-        fields = ['hr', 'phone_no','arrival_time', 'leaving_time','aadhar_card', 'pan_card', 'is_verified', 'photo']
+        fields = ['hr','arrival_time', 'leaving_time','aadhar_card', 'pan_card', 'is_verified', 'photo','user']
 
     def update(self,validated_data, hr):
         instance = Employee.objects.get(user__phone_no = validated_data['phone_no'])

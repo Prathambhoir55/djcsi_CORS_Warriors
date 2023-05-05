@@ -15,4 +15,5 @@ urlpatterns = [
     path('emp-comp/', views.EmployeeComplaint.as_view(), name = 'emp-comp'),
     path('hr-comp/', views.HRComplaint.as_view(), name = 'hr-comp'),
     path('register-comp/', views.RegisterComplaint.as_view(), name = 'register-comp'),
+    path('details-comp/<int:pk>', views.CombineListView.as_view(), name = 'details-comp'),
 ]

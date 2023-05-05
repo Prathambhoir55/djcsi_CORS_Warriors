@@ -99,8 +99,9 @@ class EmpPutAPI(GenericAPIView):
 
     def put(self,request,*args,**kwargs):
         hr = HR.objects.get(user=request.user)
-        data = request.data
-        serializer = self.serializer_class(data=data)
+        data = request.data 
+        serializer = self.serializer_class(hr, data=request.data,partial=True)
+        # serializer = self.serializer_class(data=data, many=True)
         if serializer.is_valid():
             validated_data = serializer.update(serializer.validated_data, hr)
             return Response({"message":"Success", "data":request.data}, status = status.HTTP_200_OK)
@@ -111,7 +112,7 @@ class HRGetEmployee(GenericAPIView):
     serializer_class = EmployeeGetSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, pk):
+    def get_queryset(self, request, pk):
         # try:
         user = Employee.objects.get(user__phone_no = pk)
         serializer = self.serializer_class(user)
@@ -171,3 +172,21 @@ class HRComplaint(ListAPIView):
         queryset = Complaint.objects.all()
         return queryset
 
+
+class CombineListView(ListAPIView):
+    serializer_class_emp = EmployeeGetSerializer
+    serializer_class_comp = MyComplaintSerializer
+
+    def get_queryset_emp(self):
+        return Employee.objects.get(user__phone_no = self.kwargs['pk'])
+    
+    def get_queryset_comp(self):
+        return Complaint.objects.filter(issued_by = self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        emp = self.serializer_class_emp(self.get_queryset_emp(), many=True)
+        comp = self.serializer_class_comp(self.get_queryset_comp(), many=True)
+        return Response({
+            "**Employee**": emp.data,
+            "**Complaints issued by emp**": comp.data
+        })
