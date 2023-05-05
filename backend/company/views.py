@@ -116,8 +116,6 @@ class HRGetEmployee(GenericAPIView):
         # try:
         user = Employee.objects.get(user__phone_no = pk)
         serializer = self.serializer_class(user)
-    # except:
-        # return Response("User not found", status= status.HTTP_404_NOT_FOUND)
         return Response(serializer.data)
     
 

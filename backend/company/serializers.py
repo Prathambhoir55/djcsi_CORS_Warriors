@@ -92,13 +92,15 @@ class RegisterComplaintSerializer(serializers.ModelSerializer):
     is_resolved = serializers.BooleanField(default=False)
     issued_by = serializers.IntegerField(read_only=True)
     hr = serializers.IntegerField(read_only=True)
+    issued_for = serializers.CharField(write_only = True)
 
     class Meta:
         model=Complaint
         fields=['issued_by','issued_for','text','is_resolved', 'hr']
 
     def create(self, validated_data, employee):
-        employee2 = validated_data.pop('issued_for')
+        issued_for = validated_data.pop('issued_for')
+        employee2 = Employee.objects.get(user__phone_no = issued_for)
         hr = employee.hr
         complaint = Complaint.objects.create(issued_by = employee, issued_for=employee2, hr=hr, **validated_data)
         validated_data['issued_for'] = employee2.user.name
