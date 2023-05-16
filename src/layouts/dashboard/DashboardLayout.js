@@ -102,12 +102,12 @@ export default function DashboardLayout() {
       <MDBModal animationDirection="right" show={topRightModal} tabIndex="-1" setShow={setTopRightModal}>
         <MDBModalDialog position="top-right" side>
           <MDBModalContent>
-            <MDBModalHeader className="bg-info text-white">
+            <MDBModalHeader className="bg-warning text-white">
               <MDBModalTitle>Raise a Ticket</MDBModalTitle>
               <MDBBtn color="none" className="btn-close btn-close-white" onClick={toggleShow}></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
-              <TextField label="Phone Number" value={json.issued_for} name="issued_for" onChange={handleChange} />
+              <TextField label="Phone Number" sx={{ width: '100%' }} value={json.issued_for} name="issued_for" onChange={handleChange} />
               <hr />
               <TextField
                 sx={{ width: '100%', height: 'auto' }}
@@ -120,7 +120,7 @@ export default function DashboardLayout() {
               />
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color="info" onClick={handleSubmitTicket}>
+              <MDBBtn color="warning" onClick={handleSubmitTicket}>
                 Submit Ticket
               </MDBBtn>
             </MDBModalFooter>

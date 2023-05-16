@@ -100,7 +100,8 @@ export default function BasicModal({ open, setOpen, handleOpen, handleClose, pho
               <Grid item xs={6}>
                 <TextField
                   label="Positon"
-                  value={role}
+                  name='position'
+                  value={json.position}
                   onChange={(e) => {
                     handleRole(e);
                   }}

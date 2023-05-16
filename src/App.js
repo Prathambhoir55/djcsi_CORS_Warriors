@@ -18,7 +18,7 @@ export default function App() {
       <BrowserRouter>
         <ThemeProvider>
           <ToastContainer
-            position="top-rig"
+            position="top-right"
             autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}

@@ -13,7 +13,7 @@ const ProfilePhoto = () => {
     console.log(pathColor);
     if (rating >= 8) {
       setpathColor('#7dfc03');
-    } else if (rating < 8 && rating >= 6) {
+    } else if (rating < 8 && rating >= 7) {
       setpathColor('#defe01');
     } else if (rating < 6 && rating >= 4) {
       setpathColor('##ffbb00');
@@ -49,7 +49,7 @@ const ProfilePhoto = () => {
         })}
       >
         {/* //? Profile Photo */}
-        <img style={{ width: 100, marginTop: -5 }} src="https://i.imgur.com/b9NyUGm.png" alt="doge" />
+        <img style={{ width: '70px', height: '70px', borderRadius: '50%', marginTop: -5 }} src="https://firebasestorage.googleapis.com/v0/b/codesashtra.appspot.com/o/images%2FWIN_20230409_16_05_04_Pro.jpg%20%2B%203d5d1f0a-e8ec-48f9-abfa-a71ca7bff81e?alt=media&token=268a6470-1ca8-4517-b3cc-7a0775dd1305" alt="doge" />
       </CircularProgressbarWithChildren>
     </div>
   );

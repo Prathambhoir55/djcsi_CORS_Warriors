@@ -98,8 +98,10 @@ function Profile() {
       getDownloadURL(snapshot.ref).then(async (url2) => {
         console.log(url2);
         if (type === 'aadhar') {
+          localStorage.setItem('cm_aadhar', url2)
           await ComplaintService.updateUser({ aadhar_card: url2 }).then((res) => console.log(res));
         } else {
+          localStorage.setItem('cm_pan', url2)
           await ComplaintService.updateUser({ pan_card: url2 }).then((res) => console.log(res));
         }
       });
@@ -110,6 +112,7 @@ function Profile() {
   };
 
   const toggleShow = () => setBasicModal(!basicModal);
+  let data = JSON.parse(localStorage.getItem('cm_user'))
   return (
     <MDBContainer className="">
       <MDBRow>
@@ -133,8 +136,8 @@ function Profile() {
           <MDBCard className="mb-4">
             <MDBCardBody className="text-center">
               <ProfilePhoto />
-              <p className="text-muted mb-1">Full Stack Developer</p>
-              <p className="text-muted mb-1">Bay Area, San Francisco, CA</p>
+              <p className="text-muted mb-1">{data?.name}</p>
+              <p className="text-muted mb-1">{data?.email}</p>
             </MDBCardBody>
           </MDBCard>
           <MDBCard className="mb-4">
@@ -196,19 +199,19 @@ function Profile() {
             <MDBCardBody>
               <MDBRow>
                 <MDBCol sm="3">
-                  <MDBCardText>Full Name</MDBCardText>
+                  <MDBCardText>Position</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="9">
-                  <MDBCardText className="text-muted">Johnatan Smith</MDBCardText>
+                  <MDBCardText className="text-muted">Waiter</MDBCardText>
                 </MDBCol>
               </MDBRow>
               <hr />
               <MDBRow>
                 <MDBCol sm="3">
-                  <MDBCardText>Email</MDBCardText>
+                  <MDBCardText>Working Hours</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="9">
-                  <MDBCardText className="text-muted">example@example.com</MDBCardText>
+                  <MDBCardText className="text-muted">9 - 5</MDBCardText>
                 </MDBCol>
               </MDBRow>
               <hr />
@@ -223,10 +226,10 @@ function Profile() {
               <hr />
               <MDBRow>
                 <MDBCol sm="3">
-                  <MDBCardText>Address</MDBCardText>
+                  <MDBCardText>Salary</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="9">
-                  <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
+                  <MDBCardText className="text-muted">20,000</MDBCardText>
                 </MDBCol>
               </MDBRow>
             </MDBCardBody>
@@ -288,8 +291,8 @@ function Profile() {
                           ? 'Upload Aadhar Card'
                           : 'View Aadhar Card'
                         : !pan
-                        ? 'Upload Pan Card'
-                        : 'View Pan Card'}
+                          ? 'Upload Pan Card'
+                          : 'View Pan Card'}
                     </MDBModalTitle>
                     <MDBBtn className="btn-close" color="none" onClick={toggleShow}></MDBBtn>
                   </MDBModalHeader>
@@ -312,7 +315,7 @@ function Profile() {
                           }}
                         />
                       ) : (
-                        <CardMedia component="img" image={aadhar_uri} />
+                        <CardMedia component="img" image={localStorage.getItem('cm_aadhar')} />
                       )
                     ) : !pan ? (
                       <Dropzone
@@ -331,7 +334,7 @@ function Profile() {
                         }}
                       />
                     ) : (
-                      <CardMedia component="img" image={pan_uri} />
+                      <CardMedia component="img" image={localStorage.getItem('cm_pan')} />
                     )}
                   </MDBModalBody>
                 </MDBModalContent>

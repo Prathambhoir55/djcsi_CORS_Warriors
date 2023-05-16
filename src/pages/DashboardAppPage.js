@@ -69,7 +69,7 @@ export default function DashboardAppPage() {
             <Grid item xs={12} md={6} lg={12}>
               <AppWebsiteVisits
                 title="Avg. Monthly Ratings"
-                subheader="(+43%) than last year"
+                subheader=""
                 chartLabels={[
                   '05/01/2022',
                   '06/01/2022',
@@ -85,19 +85,19 @@ export default function DashboardAppPage() {
                 ]}
                 chartData={[
                   {
-                    name: 'Branch A',
+                    name: 'Bandra',
                     type: 'column',
                     fill: 'solid',
                     data: [23, 11, 22, 27, 13, 22, 37, 22, 44, 22, 30],
                   },
                   {
-                    name: 'Branch B',
+                    name: 'Colaba',
                     type: 'area',
                     fill: 'gradient',
                     data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
                   },
                   {
-                    name: 'Branch C',
+                    name: 'Juhu',
                     type: 'line',
                     fill: 'solid',
                     data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
@@ -107,7 +107,7 @@ export default function DashboardAppPage() {
             </Grid>
           )}
 
-          <Grid item xs={12} md={6} lg={8}>
+          <Grid item xs={12} md={6} lg={JSON.parse(localStorage.getItem('cm_user'))?.isemployee ? 8 : 12}>
             <AppNewsUpdate
               title="Conflicts"
               list={[
@@ -122,7 +122,7 @@ export default function DashboardAppPage() {
                   postedAt: faker.date.recent(),
                 },
                 {
-                  title: "Conflict between 'Urmi' and 'Khushias'",
+                  title: "Conflict between 'Urmi' and 'Khushi'",
                   description: 'Conflict Description',
                   postedAt: faker.date.recent(),
                 },
@@ -130,7 +130,7 @@ export default function DashboardAppPage() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          {JSON.parse(localStorage.getItem('cm_user'))?.isemployee && <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
               title="Work Experiences "
               list={[...Array(5)].map((_, index) => ({
@@ -140,7 +140,7 @@ export default function DashboardAppPage() {
                 time: faker.date.past(),
               }))}
             />
-          </Grid>
+          </Grid>}
         </Grid>
       </Container>
     </>

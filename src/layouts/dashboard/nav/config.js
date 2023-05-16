@@ -16,8 +16,8 @@ const navConfig = [
     icon: icon('ic_user'),
   },
   {
-    title: 'Black List',
-    path: '/blacklist',
+    title: 'Blue Flag',
+    path: '/blueflag',
     icon: icon('ic_warning'),
   },
   {

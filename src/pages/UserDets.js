@@ -124,14 +124,7 @@ function Profile({ data }) {
                             <Card>
                                 <CardContent>
                                     {
-                                        data?.aadhar_card.length !== 0 ? <CardMedia component='img' image={data?.aadhar_card} /> : <Typography>Aadhar Card not verified</Typography>
-                                    }
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardContent>
-                                    {
-                                        data?.pan_card.length !== 0 ? <CardMedia component='img' image={data?.pan_card} /> : <Typography>PAN Card not verified</Typography>
+                                        localStorage.getItem('cm_aadhar') ? <CardMedia component='img' image={localStorage.getItem('cm_aadhar')} /> : <Typography>Aadhar Card not verified</Typography>
                                     }
                                 </CardContent>
                             </Card>

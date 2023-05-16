@@ -46,10 +46,10 @@ export default function BasicModal({ open, setOpen, handleClose, handleOpen, pho
                 <Box sx={style}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Icon icon="material-symbols:warning-rounded" width='40' />
-                        <Typography variant='h5' sx={{ marginLeft: '2%' }}>Verify before black listing</Typography>
+                        <Typography variant='h5' sx={{ marginLeft: '2%' }}>Verify before blue flaging</Typography>
                     </div>
                     <TextField sx={{ width: '100%', marginTop: '5%' }} name='phone_no' label='Phone Number' />
-                    <TextField sx={{ width: '100%', marginTop: '5%' }} name='password' label='Password' />
+                    <TextField sx={{ width: '100%', marginTop: '5%' }} type='password' name='password' label='Password' />
                     <LoadingButton onClick={black} sx={button} fullWidth size="large" type="submit" variant="contained">Submit</LoadingButton>
 
                 </Box>

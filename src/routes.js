@@ -16,6 +16,7 @@ import InterviewProcessHR from './pages/InterviewProcessHR';
 import Review from './pages/Review';
 import BlackListPage from './pages/BlackListPage';
 import DetsPage from './pages/DetsPage';
+import Verify from './sections/@dashboard/interview/Verify';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +34,7 @@ export default function Router() {
         { path: 'check', element: <InterviewProcessHR /> },
         { path: 'profile', element: <ProfilePage /> },
         { path: 'details/*', element: <DetsPage /> },
+        { path: 'verify', element: <Verify /> },
 
       ],
     },
@@ -45,7 +47,7 @@ export default function Router() {
       element: <SignUpPage />,
     },
     {
-      path: '/blacklist', element: <BlackListPage />
+      path: '/blueflag', element: <BlackListPage />
     },
     {
       path: '/review/*',

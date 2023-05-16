@@ -1,6 +1,14 @@
 /* eslint-disable */
 import React from 'react';
 import Webcam from 'react-webcam';
+import Scam from 'src/services/Scam';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router';
+import { Typography, Button, CircularProgress } from '@mui/material';
+import { useState } from 'react';
+import successHandler from 'src/helper/sucessHandler';
+
 
 const videoConstraints = {
   width: 1280,
@@ -30,6 +38,8 @@ Oy6BVYrKsQDK3EdgaBH5VuTOMlOxhgBEYt16qqfSU9NyG8+loMc2UNsEfILWGLz1
 7OWSJcgp99CPMNcrvQIDAQAB
 -----END PUBLIC KEY-----`;
 const InterviewBL = () => {
+  const navigate = useNavigate()
+  let num = 1
   const handleImageClick = (imageSrc) => {
     var encrypt = new JSEncrypt();
     encrypt.setPublicKey(pubkey);
@@ -43,20 +53,42 @@ const InterviewBL = () => {
       console.log('Fail');
     }
   };
-
+  const [loading, setLoading] = useState(false)
   return (
-    <Webcam audio={false} height={720} screenshotFormat="image/jpeg" width={1280} videoConstraints={videoConstraints}>
-      {({ getScreenshot }) => (
-        <button
-          onClick={() => {
-            const imageSrc = getScreenshot();
-            console.log(imageSrc);
-          }}
-        >
-          Capture photo
-        </button>
-      )}
-    </Webcam>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Typography >Screening</Typography>
+      {!loading ? <Webcam audio={false} height={620} screenshotFormat="image/jpeg" width={1180} videoConstraints={videoConstraints}>
+        {({ getScreenshot }) => (
+          <Button
+            onClick={async () => {
+              const imageSrc = getScreenshot()
+              console.log(imageSrc)
+              setLoading(true)
+              
+            }}
+
+          >
+            Capture photo
+          </Button>
+        )}
+      </Webcam> : <CircularProgress />}
+      <Button
+        onClick={() => navigate('/dashboard/verify')}
+      >
+        Continue Process
+      </Button>
+    </>
   );
 };
 
